@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sushi_doshi/components/sushi_roll_tile.dart';
 import 'package:sushi_doshi/models/sushi.dart';
+import 'package:sushi_doshi/pages/roll_info_page.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({super.key});
@@ -9,15 +10,16 @@ class ShopPage extends StatefulWidget {
   State<ShopPage> createState() => _ShopPageState();
 }
 
+class _ShopPageState extends State<ShopPage> {
   // List of sushi rolls
-  List sushiRollList = [
-    ["Salmon Nigiri", "assets/images/salmon_nigiri.png", 5.99, "Salmon atop white rice in a traditional style."],
-    ["Tuna Nigiri", "assets/images/tuna_nigiri.png", 5.99, "Tuna atop white rice in a traditional style."],
-    ["California Roll", "assets/images/california_roll.png", 5.99, "Fresh crab, avocado, and cucumber rolled in seaweed and rice."],
+  final List<List<dynamic>> sushiRollList = [
+    ["Salmon Nigiri", "assets/images/salmon_nigiri.png", 5.99, "Salmon atop white rice in a traditional style.", 5],
+    ["Tuna Nigiri", "assets/images/tuna_nigiri.png", 5.99, "Tuna atop white rice in a traditional style.", 4],
+    ["California Roll", "assets/images/california_roll.png", 5.99, "Fresh crab, avocado, and cucumber rolled in seaweed and rice.", 3],
   ];
 
   // List of ingredients for custom rolls
-  List<String> ingredients = [
+  final List<String> ingredients = [
     "Salmon",
     "Tuna",
     "Avocado",
@@ -28,17 +30,17 @@ class ShopPage extends StatefulWidget {
   ];
 
   // Map to keep track of selected ingredients
-  Map<String, bool> selectedIngredients = {};
+  final Map<String, bool> selectedIngredients = {};
 
   @override
   void initState() {
+    super.initState();
     // Initialize selectedIngredients map
     for (var ingredient in ingredients) {
       selectedIngredients[ingredient] = false;
     }
   }
 
-class _ShopPageState extends State<ShopPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,13 +66,23 @@ class _ShopPageState extends State<ShopPage> {
               itemCount: sushiRollList.length,
               scrollDirection: Axis.vertical,
               itemBuilder: (context, index) {
-                return SushiRollTile(
-                  sushi: Sushi(
-                    name: sushiRollList[index][0],
-                    imagePath: sushiRollList[index][1],
-                    price: sushiRollList[index][2],
-                    description: sushiRollList[index][3],
-                  ),
+                final sushi = Sushi(
+                  name: sushiRollList[index][0],
+                  imagePath: sushiRollList[index][1],
+                  price: sushiRollList[index][2],
+                  description: sushiRollList[index][3],
+                  rating: sushiRollList[index][4],
+                );
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => RollInfoPage(sushi: sushi),
+                      ),
+                    );
+                  },
+                  child: SushiRollTile(sushi: sushi),
                 );
               },
             ),
