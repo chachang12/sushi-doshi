@@ -13,9 +13,9 @@ class ShopPage extends StatefulWidget {
 class _ShopPageState extends State<ShopPage> {
   // List of sushi rolls
   final List<List<dynamic>> sushiRollList = [
-    ["Salmon Nigiri", "assets/images/salmon_nigiri.png", 5.99, "Salmon atop white rice in a traditional style.", 5],
-    ["Tuna Nigiri", "assets/images/tuna_nigiri.png", 5.99, "Tuna atop white rice in a traditional style.", 4],
-    ["California Roll", "assets/images/california_roll.png", 5.99, "Fresh crab, avocado, and cucumber rolled in seaweed and rice.", 3],
+    ["Salmon Nigiri", "assets/images/salmon_nigiri.png", 5.99, "Salmon atop white rice in a traditional style.", 5, ['Salmon', 'Rice', 'Seaweed', 'Wasabi']],
+    ["Tuna Nigiri", "assets/images/tuna_nigiri.png", 5.99, "Tuna atop white rice in a traditional style.", 4, ['Tuna', 'Rice', 'Seaweed', 'Wasabi']],
+    ["California Roll", "assets/images/california_roll.png", 5.99, "Fresh crab, avocado, and cucumber rolled in seaweed and rice.", 3, ['Crab', 'Rice', 'Seaweed', 'Cucumber', 'Avocado']],
   ];
 
   // List of ingredients for custom rolls
@@ -72,6 +72,7 @@ class _ShopPageState extends State<ShopPage> {
                   price: sushiRollList[index][2],
                   description: sushiRollList[index][3],
                   rating: sushiRollList[index][4],
+                  ingredients: sushiRollList[index][5],
                 );
                 return GestureDetector(
                   onTap: () {

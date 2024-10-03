@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sushi_doshi/models/sushi.dart';
+import 'package:sushi_doshi/models/cart_model.dart';
 
 class SushiRollTile extends StatelessWidget {
-
-  Sushi sushi;
+  final Sushi sushi;
 
   SushiRollTile({super.key, required this.sushi});
 
-  void addToCart() {
-    // TODO: Implement the logic to add the roll to the cart
-    print('$sushi.name added to cart');
+  void addToCart(BuildContext context) {
+    Provider.of<CartModel>(context, listen: false).addItem(sushi);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('${sushi.name} added to cart')),
+    );
   }
 
   @override
@@ -25,7 +28,7 @@ class SushiRollTile extends StatelessWidget {
           children: [
             // Image of the sushi roll
             Image.asset(
-              sushi.imagePath, 
+              sushi.imagePath,
               height: 150,
               width: 150,
             ),
@@ -44,7 +47,7 @@ class SushiRollTile extends StatelessWidget {
                     ],
                   ),
                   GestureDetector(
-                    onTap: addToCart,
+                    onTap: () => addToCart(context),
                     child: Container(
                       padding: const EdgeInsets.all(20),
                       decoration: const BoxDecoration(
@@ -52,7 +55,7 @@ class SushiRollTile extends StatelessWidget {
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10),
                           bottomRight: Radius.circular(10),
-                        )
+                        ),
                       ),
                       child: const Icon(
                         Icons.add,

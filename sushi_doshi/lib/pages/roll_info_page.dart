@@ -57,7 +57,13 @@ class RollInfoPage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            
+            Text(
+              'Ingredients: ${sushi.ingredients.join(', ')}', // New field
+              style: const TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
           ],
         ),
       ),
